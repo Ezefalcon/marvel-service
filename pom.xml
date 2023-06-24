@@ -10,7 +10,7 @@
     </parent>
     <groupId>com.openpay</groupId>
     <artifactId>marvel-service</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>1.0</version>
     <name>marvel-service</name>
     <description>marvel-service</description>
     <properties>
@@ -41,6 +41,14 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>repackage</id>
+                        <configuration>
+                            <classifier>exec</classifier>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>

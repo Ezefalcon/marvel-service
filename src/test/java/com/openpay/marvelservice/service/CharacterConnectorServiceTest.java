@@ -15,7 +15,7 @@ import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;
 
 
-public class CharacterServiceTest extends AbstractBaseTest {
+public class CharacterConnectorServiceTest extends AbstractBaseTest {
 
     @Mock
     private MarvelUtil marvelUtil;
@@ -24,7 +24,7 @@ public class CharacterServiceTest extends AbstractBaseTest {
     private RestTemplate restTemplate;
 
     @InjectMocks
-    private CharacterService characterService;
+    private CharacterConnectorService characterService;
 
 
     @Test
@@ -32,17 +32,17 @@ public class CharacterServiceTest extends AbstractBaseTest {
 
         // Arrange
         when(marvelUtil.getMarvelHash(anyLong())).thenReturn("hash");
-        when(marvelUtil.getUrlWithParams(anyString(), anyLong(), anyString())).thenReturn("url");
+        when(marvelUtil.getUrlWithParams(anyString(), anyLong(), anyString(), anyInt(), anyInt())).thenReturn("url");
 
         ResponseEntity responseEntity = mock(ResponseEntity.class);
         when(restTemplate.exchange(anyString(), eq(HttpMethod.GET), eq(null), eq(ResponseDto.class))).thenReturn(responseEntity);
 
         // Act
-        characterService.getCharacters();
+        characterService.getCharacters(0, 20);
 
         // Assert
         verify(marvelUtil).getMarvelHash(anyLong());
-        verify(marvelUtil).getUrlWithParams(anyString(), anyLong(), anyString());
+        verify(marvelUtil).getUrlWithParams(anyString(), anyLong(), anyString(), anyInt(), anyInt());
         verify(restTemplate).exchange(anyString(), eq(HttpMethod.GET), eq(null), eq(ResponseDto.class)); // Verify if restTemplate.exchange() is called with the expected arguments
     }
 

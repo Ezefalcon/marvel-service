@@ -11,7 +11,7 @@ import org.springframework.web.client.RestTemplate;
 import java.sql.Timestamp;
 
 @Service
-public class CharacterService {
+public class CharacterConnectorService {
 
     @Value("${marvel.base.url}")
     private String baseUrl;
@@ -20,18 +20,18 @@ public class CharacterService {
 
     private MarvelUtil marvelUtil;
 
-    public CharacterService(RestTemplate restTemplate, MarvelUtil marvelUtil) {
+    public CharacterConnectorService(RestTemplate restTemplate, MarvelUtil marvelUtil) {
         this.restTemplate = restTemplate;
         this.marvelUtil = marvelUtil;
     }
 
-    public ResponseEntity<ResponseDto> getCharacters() {
+    public ResponseEntity<ResponseDto> getCharacters(int offset, int limit) {
         String apiUrl = baseUrl + "/characters";
 
         long ts = new Timestamp(System.currentTimeMillis()).getTime();
         String hash = marvelUtil.getMarvelHash(ts);
 
-        String url = marvelUtil.getUrlWithParams(apiUrl, ts, hash);
+        String url = marvelUtil.getUrlWithParams(apiUrl, ts, hash, offset, limit);
 
         return restTemplate.exchange(url, HttpMethod.GET, null, ResponseDto.class);
     }

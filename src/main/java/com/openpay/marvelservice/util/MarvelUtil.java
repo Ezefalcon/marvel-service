@@ -46,4 +46,8 @@ public class MarvelUtil {
     public String getUrlWithParams(String apiUrl, long ts, String hash) {
         return apiUrl + "?apikey=" + publicKey + "&ts=" + ts + "&hash=" + hash;
     }
+
+    public String getUrlWithParams(String apiUrl, long ts, String hash, int offset, int limit) {
+        return getUrlWithParams(apiUrl, ts, hash) + "&offset=" + offset + "&limit=" + limit;
+    }
 }
